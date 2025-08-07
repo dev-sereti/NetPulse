@@ -4,18 +4,18 @@ from src.database.influx_client import InfluxDBManager
 from src.utils.config_loader import config
 
 async def main():
-    logger.info("Starting Network Monitor Application")
+    logger.info("Starting Network NetPulse.....")
     
     # Initialize database connection
     db_manager = InfluxDBManager()
     
     try:
         # Main monitoring loop will be implemented here
-        logger.info("Network Monitor is running...")
+        logger.info("NetPulse is running...")
         while True:
             await asyncio.sleep(config.monitoring_interval)
     except KeyboardInterrupt:
-        logger.info("Shutting down Network Monitor")
+        logger.info("Shutting down NetPulse")
     finally:
         db_manager.close()
 
