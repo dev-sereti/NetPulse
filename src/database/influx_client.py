@@ -2,6 +2,7 @@
 
 from influxdb_client import InfluxDBClient, Point, WritePrecision
 from influxdb_client.client.write_api import SYNCHRONOUS
+from influxdb_client.client.flux_table import FluxTable
 from typing import List, Dict, Any
 from datetime import datetime
 from src.utils.logger import logger
@@ -41,11 +42,17 @@ class InfluxDBManager:
         except Exception as e:
             logger.error(f"Error writing to InfluxDB: {e}")
 
-    def query_metrics(self, query: str) -> List[Dict]:
-        """Execute a Flux query and return results"""
+    def query_metrics(self, query: str) -> List[Dict[str, Any]]:
+        """Execute a Flux query and return results as a list of dictionaries"""
         try:
-            result = self.query_api.query(query=query, org=config.influxdb_org)
-            return result
+            tables: List[FluxTable] = self.query_api.query(query=query, org=config.influxdb_org)
+            results: List[Dict[str, Any]] = []
+
+            for table in tables:
+                for record in table.records:
+                    results.append(record.values)
+
+            return results
         except Exception as e:
             logger.error(f"Error querying InfluxDB: {e}")
             return []
