@@ -4,7 +4,7 @@ from src.database.influx_client import InfluxDBManager
 from src.utils.config_loader import config
 
 async def main():
-    logger.info("Starting Network NetPulse.....")
+    logger.info("Starting NetPulse.....")
     
     # Initialize database connection
     db_manager = InfluxDBManager()
