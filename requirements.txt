@@ -1,0 +1,13 @@
+# Core dependencies
+influxdb-client==1.38.0
+asyncio==3.4.3
+aiohttp==3.9.1
+pysnmp==4.4.12
+ping3==4.0.4
+schedule==1.2.0
+pydantic==2.5.0
+python-dotenv==1.0.0
+
+# Optional API dependencies
+pyyaml==6.0.1
+pytest-asyncio==0.21.1
