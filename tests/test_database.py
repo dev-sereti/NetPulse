@@ -1,9 +1,15 @@
-import pytest  # type: ignore[unused-import]
+import pytest
 
 from src.database.influx_client import InfluxDBManager
 
-def test_influxdb_connection():
-    """Test InfluxDB connection"""
+
+@pytest.fixture
+def influxdb_manager():
     db = InfluxDBManager()
-    assert db.client is not None
+    yield db
     db.close()
+
+
+def test_influxdb_connection(influxdb_manager):
+    """Test that InfluxDB client is initialized correctly"""
+    assert influxdb_manager.client is not None

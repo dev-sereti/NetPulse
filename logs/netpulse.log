@@ -1,0 +1,1 @@
+2025-08-08 15:46:11.490 | INFO     | src.database.influx_client:__init__:28 - Connected to InfluxDB at http://localhost:8086
