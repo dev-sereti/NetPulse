@@ -3,7 +3,7 @@ version: '3.8'
 services:
   influxdb:
     image: influxdb:2.7-alpine
-    container_name: network-monitor-influxdb
+    container_name: netpulse-influxdb
     ports:
       - "8086:8086"
     volumes:
@@ -13,7 +13,7 @@ services:
       - DOCKER_INFLUXDB_INIT_MODE=setup
       - DOCKER_INFLUXDB_INIT_USERNAME=admin
       - DOCKER_INFLUXDB_INIT_PASSWORD=adminpassword123
-      - DOCKER_INFLUXDB_INIT_ORG=network-monitor
+      - DOCKER_INFLUXDB_INIT_ORG=netpulse
       - DOCKER_INFLUXDB_INIT_BUCKET=network-metrics
       - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=my-super-secret-auth-token
     networks:
@@ -21,7 +21,7 @@ services:
 
   grafana:
     image: grafana/grafana:10.2.0
-    container_name: network-monitor-grafana
+    container_name: netpulse-grafana
     ports:
       - "3000:3000"
     volumes:
@@ -37,16 +37,16 @@ services:
     networks:
       - monitoring
 
-  network-monitor:
+  netpulse:
     build: .
-    container_name: network-monitor-app
+    container_name: netpulse-app
     volumes:
       - ./src:/app/src
       - ./config:/app/config
     environment:
       - INFLUXDB_URL=http://influxdb:8086
       - INFLUXDB_TOKEN=my-super-secret-auth-token
-      - INFLUXDB_ORG=network-monitor
+      - INFLUXDB_ORG=netpulse
       - INFLUXDB_BUCKET=network-metrics
     depends_on:
       - influxdb
@@ -57,6 +57,7 @@ services:
 volumes:
   influxdb-data:
   grafana-data:
+
 
 networks:
   monitoring:

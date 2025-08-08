@@ -9,7 +9,7 @@ class Config:
     def __init__(self):
         self.influxdb_url = os.getenv('INFLUXDB_URL', 'http://localhost:8086')
         self.influxdb_token = os.getenv('INFLUXDB_TOKEN')
-        self.influxdb_org = os.getenv('INFLUXDB_ORG', 'network-monitor')
+        self.influxdb_org = os.getenv('INFLUXDB_ORG', 'netpulse')
         self.influxdb_bucket = os.getenv('INFLUXDB_BUCKET', 'network-metrics')
         
         self.log_level = os.getenv('LOG_LEVEL', 'INFO')
