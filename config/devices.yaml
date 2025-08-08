@@ -1,0 +1,35 @@
+devices:
+  - name: "Gateway Router"
+    ip: "192.168.1.1"
+    type: "router"
+    monitoring:
+      ping: true
+      snmp: true
+      ports:
+        - port: 22
+          protocol: tcp
+          name: "SSH"
+        - port: 443
+          protocol: tcp
+          name: "HTTPS"
+    snmp_oids:
+      - oid: "1.3.6.1.2.1.1.3.0"
+        name: "uptime"
+      - oid: "1.3.6.1.2.1.2.2.1.10"
+        name: "interface_in_octets"
+    thresholds:
+      ping_latency: 100  # ms
+      packet_loss: 5     # percentage
+      
+  - name: "Web Server"
+    ip: "192.168.1.100"
+    type: "server"
+    monitoring:
+      ping: true
+      ports:
+        - port: 80
+          protocol: tcp
+          name: "HTTP"
+        - port: 443
+          protocol: tcp
+          name: "HTTPS"
