@@ -6,18 +6,27 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     iputils-ping \
     snmp \
+    snmp-mibs-downloader \
+    gcc \
+    python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements and install Python dependencies
+# Copy requirements first for better caching
 COPY requirements.txt .
+
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY src/ ./src/
 COPY config/ ./config/
 
+# Create logs directory
+RUN mkdir -p logs
+
 # Set environment variables
 ENV PYTHONUNBUFFERED=1
+ENV PYTHONPATH=/app
 
 # Run the application
 CMD ["python", "-m", "src.main"]
